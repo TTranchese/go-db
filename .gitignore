@@ -19,3 +19,6 @@ vendor/
 *.swp
 
 # Logs
+
+# Config
+config.yaml
