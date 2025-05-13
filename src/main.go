@@ -11,5 +11,5 @@ func main() {
 		panic(err)
 	}
 
-	api.StartServer(config, ":8080")
+	api.StartServer(config)
 }

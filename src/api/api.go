@@ -8,15 +8,17 @@ import (
 	"net/http"
 )
 
-func StartServer(Config models.Config, Port string) {
+func StartServer(Config models.Config) {
 	fmt.Println("starting GO DB...")
+
+	port := checkPortPrefix(Config.Port)
 
 	http.HandleFunc("/create-index", func(w http.ResponseWriter, r *http.Request) {
 		handleCreateIndex(w, r, Config)
 	})
 
-	log.Default().Println("server is running on port ", Port)
-	log.Fatal(http.ListenAndServe(Port, nil))
+	log.Default().Println("server is running on port ", port)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 func handleCreateIndex(w http.ResponseWriter, r *http.Request, Config models.Config) {
@@ -43,4 +45,16 @@ func handleCreateIndex(w http.ResponseWriter, r *http.Request, Config models.Con
 
 	fmt.Fprintf(w, "index file %s created successfully\n", fileName)
 	log.Default().Println("index file created successfully:", fileName)
+}
+
+func checkPortPrefix(port string) string {
+	if port == "" {
+		return ":8080"
+	}
+
+	if port[0] != ':' {
+		port = ":" + port
+	}
+
+	return port
 }
