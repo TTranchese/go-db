@@ -20,5 +20,8 @@ vendor/
 
 # Logs
 
+*.log
+*.txt
+
 # Config
 config.yaml
